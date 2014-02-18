@@ -7,6 +7,18 @@
   <version>0.0.3</version>
   <packaging>jar</packaging>
 
+    <name>SQL Modifier</name>
+    <description>Sql query WHERE clause modifier</description>
+    <url>https://github.com/khomisha/sql-modifier</url>
+
+    <licenses>
+        <license>
+            <name>The Apache Software License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
 
   <dependencies>
     <dependency>
@@ -45,6 +57,18 @@
           <bottom>Copyright &#169; {inceptionYear}-{currentYear} Mikhail Khodonov. All Rights Reserved.</bottom>
         </configuration>
       </plugin>
+		<plugin>
+		  <groupId>org.jasig.maven</groupId>
+		  <artifactId>maven-notice-plugin</artifactId>
+		  <version>1.0.4</version>
+		  <configuration>
+		    <noticeTemplate>https://source.jasig.org/licenses/NOTICE.template</noticeTemplate>
+		 
+		    <licenseMapping>
+		      <param>https://source.jasig.org/licenses/license-mappings.xml</param>
+		    </licenseMapping>
+		  </configuration>
+		</plugin>
 	</plugins>
   </build>
 </project>

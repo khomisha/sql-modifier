@@ -1,20 +1,20 @@
-/*
-* Copyright 2013 Mikhail Khodonov
-*
-* Licensed under the Apache License, Version 2.0 (the "License"); you may not
-* use this file except in compliance with the License. You may obtain a copy of
-* the License at
-*
-* http://www.apache.org/licenses/LICENSE-2.0
-*
-* Unless required by applicable law or agreed to in writing, software
-* distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
-* WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
-* License for the specific language governing permissions and limitations under
-* the License.
-*
-* $Id: SQLModifier.java 5 2013-07-16 14:00:34Z khomisha $
-*/
+/**
+ * Copyright 2013 Mikhail Khodonov
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
+ *
+ * $Id: SQLModifier.java 5 2013-07-16 14:00:34Z khomisha $
+ */
 
 package org.homedns.mkh.sqlmodifier;
 
@@ -25,7 +25,8 @@ import com.akiban.sql.parser.*;
 import com.akiban.sql.unparser.NodeToString;
 
 /**
- * SQL parser. Doesn't support postgresql specific stored procedures calls, e.g.
+ * SQL modifier. Doesn't support DBMS specific syntax constructions, e.g.
+ * postgresql stored procedures calls
  * <p>
  * <code> select * from get_person( ?, ? ) </code> or
  * <code> select set_log_params </code>
@@ -57,33 +58,35 @@ public class SQLModifier {
 			if( node instanceof CursorNode ) {
 				_nodes.clear( );
 				_cn = ( CursorNode )node;
-				_cn.accept( new HasNodeVisitor( CursorNode.class ) {
-					@Override
-					public Visitable visit( Visitable node ) {
-						onVisit( node );
-						return( node );
-					}
-
-					@Override
-					public boolean stopTraversal( ) {
-						return( false );
-					}
-
-					@Override
-					public boolean visitChildrenFirst( Visitable node ) {
-						return( false );
-					}
-
-					@Override
-					public boolean skipChildren( Visitable node ) {
-						return( false );
-					}
-				} );
+				_cn.accept( 
+					new HasNodeVisitor( CursorNode.class ) {
+						@Override
+						public Visitable visit( Visitable node ) {
+							onVisit( node );
+							return( node );
+						}
+	
+						@Override
+						public boolean stopTraversal( ) {
+							return( false );
+						}
+	
+						@Override
+						public boolean visitChildrenFirst( Visitable node ) {
+							return( false );
+						}
+	
+						@Override
+						public boolean skipChildren( Visitable node ) {
+							return( false );
+						}
+					} 
+				);
 			} else {
-				throw new IllegalArgumentException( "wrong input query: "
-						+ sQuery );
+				throw new IllegalArgumentException( "wrong input query: " + sQuery );
 			}
-		} catch( StandardException e ) {
+		} 
+		catch( StandardException e ) {
 			throw new StandardException( sQuery, e );
 		}
 	}
@@ -126,21 +129,27 @@ public class SQLModifier {
 	 * 
 	 * @throws StandardException
 	 */
-	public String modifyQuery( String sOperator, String sAddingWhere )
-			throws StandardException {
+	public String modifyQuery( 
+		String sOperator, 
+		String sAddingWhere 
+	) throws StandardException {
 		NodeToString node2String = new NodeToString( );
 		try {
 			for( SelectNode sn : _nodes ) {
 				ValueNode vn = sn.getWhereClause( );
 				if( vn != null ) {
-					sAddingWhere = node2String.toString( vn ) + " " + sOperator
-							+ " " + sAddingWhere;
+					sAddingWhere = (
+						node2String.toString( vn ) + 
+						" " + sOperator
+						+ " " + sAddingWhere
+					);
 				}
 				vn = getWhereNode( sAddingWhere );
 				sn.setWhereClause( vn );
 			}
 			return( node2String.toString( _cn ) );
-		} catch( StandardException e ) {
+		} 
+		catch( StandardException e ) {
 			throw new StandardException( "adding condition: " + sAddingWhere, e );
 		}
 	}
@@ -156,7 +165,8 @@ public class SQLModifier {
 	public void checkSyntaxQuery( String sQuery ) throws StandardException {
 		try {
 			_parser.parseStatement( sQuery );
-		} catch( StandardException e ) {
+		} 
+		catch( StandardException e ) {
 			throw new StandardException( sQuery, e );
 		}
 	}
