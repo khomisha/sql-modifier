@@ -45,7 +45,7 @@ project can use it directly by adding the appropriate entries to the
 
 ## Using From Binaries
 
-Packaged jars can be downloaded directly from the.
+Packaged jars can be downloaded directly from the [Releases page](https://github.com/khomisha/sql-modifier.git/releases).
 
 
 ## Contact
