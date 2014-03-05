@@ -28,8 +28,7 @@ The resulting HTML files are in `target/site/apidocs/`.
 
 ## Using From Maven
 
-The SQL Parser is in the standard Maven Central repository. Any Maven based
-project can use it directly by adding the appropriate entries to the
+Any Maven based project can use it directly by adding the appropriate entries to the
 `dependencies` section of its `pom.xml` file:
 
 ```xml
