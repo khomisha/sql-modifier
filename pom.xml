@@ -7,6 +7,10 @@
   <version>0.0.3</version>
   <packaging>jar</packaging>
 
+  <properties>
+	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+
     <name>SQL Modifier</name>
     <description>Sql query WHERE clause modifier</description>
     <url>https://github.com/khomisha/sql-modifier</url>
@@ -18,7 +22,6 @@
             <distribution>repo</distribution>
         </license>
     </licenses>
-
 
   <dependencies>
     <dependency>
@@ -35,6 +38,15 @@
   </dependencies>
   <build>
 	<plugins>
+	      <plugin>
+	        <groupId>org.apache.maven.plugins</groupId>
+	        <artifactId>maven-compiler-plugin</artifactId>
+	        <version>2.3.2</version>
+	        <configuration>
+	          <source>1.8</source>
+	          <target>1.8</target>
+	        </configuration>
+	      </plugin>
 		<plugin>
 			<groupId>org.apache.maven.plugins</groupId>
 			<artifactId>maven-source-plugin</artifactId>
@@ -57,6 +69,19 @@
           <bottom>Copyright &#169; {inceptionYear}-{currentYear} Mikhail Khodonov. All Rights Reserved.</bottom>
         </configuration>
       </plugin>
+		<plugin>
+		    <groupId>org.apache.maven.plugins</groupId>
+		    <artifactId>maven-jar-plugin</artifactId>
+        	<version>2.5</version>
+		    <configuration>
+		        <archive>                   
+		            <manifest>
+		                <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+		                <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+		            </manifest>
+		        </archive>
+		    </configuration>
+		</plugin>
 		<plugin>
 		  <groupId>org.jasig.maven</groupId>
 		  <artifactId>maven-notice-plugin</artifactId>
